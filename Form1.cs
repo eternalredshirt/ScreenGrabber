@@ -8,11 +8,14 @@ namespace ScreenGrabber
     {
         private bool pnlDragIsDragging = false;
         private Point lastCursorPos;
+        Bitmap bm = null;
 
         public MainWindow()
         {
             //TODO remove debug members
             InitializeComponent();
+
+            bm = GetBitmapScreenShot(); 
 
             Rectangle ScreenSize = Screen.PrimaryScreen.Bounds;
 
@@ -49,9 +52,7 @@ namespace ScreenGrabber
             pnlDrag.MouseUp += pnlDrag_MouseUp;
 
             //Testing Debug
-            Debug.Print("Ready to grab");
-
-            //Debug.Print(btnClose.Height.ToString() + " " + btnClose.Width.ToString());
+            //Debug.Print("Ready to grab");
         }
 
         private void pnlDrag_MouseDown(object sender, MouseEventArgs e)
@@ -76,23 +77,14 @@ namespace ScreenGrabber
             pnlDragIsDragging = false;
         }
 
-        private async void btnGrab_Click(object sender, EventArgs e)
+        private void btnGrab_Click(object sender, EventArgs e)
         {
             this.Hide();
 
-            await Task.Delay(150);
-            //TODO Hide window on capture - Done, window capture must be paused after hiding window.
-
-            //TODO Give button relative flexible position
-
-            /* TODO Shrink Screenshot to window size - DONE!
-             * that was actually fun however the "this.size.height"
-             * includes the menu bar height, cutting off the taskbar 
-             * in the window*/
+            Thread.Sleep(150);
 
             //Code that runs on Grab Button click
-            Bitmap bm = GetBitmapScreenShot();
-
+            bm = GetBitmapScreenShot();
             //Remove if not working
             Bitmap winBm = new Bitmap(this.Size.Width, this.Size.Height);
 
@@ -149,7 +141,7 @@ namespace ScreenGrabber
 
             if (result == DialogResult.OK) {
                 string filePath = dialogSave.FileName;
-                GetBitmapScreenShot().Save(filePath);
+                bm.Save(filePath);
             }
             
 

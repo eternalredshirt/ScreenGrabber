@@ -1,6 +1,6 @@
 ﻿namespace ScreenGrabber
 {
-    partial class Form1
+    partial class MainWindow
     {
         /// <summary>
         ///  Required designer variable.
@@ -29,25 +29,57 @@
         private void InitializeComponent()
         {
             btnGrab = new Button();
+            btnClose = new Button();
+            pnlDrag = new Panel();
             SuspendLayout();
             // 
             // btnGrab
             // 
-            btnGrab.Location = new Point(0, 0);
+            btnGrab.Location = new Point(135, 140);
+            btnGrab.Margin = new Padding(1);
             btnGrab.Name = "btnGrab";
-            btnGrab.Size = new Size(188, 58);
+            btnGrab.Size = new Size(50, 25);
             btnGrab.TabIndex = 0;
             btnGrab.Text = "Grab";
             btnGrab.UseVisualStyleBackColor = true;
             btnGrab.Click += btnGrab_Click;
             // 
-            // Form1
+            // btnClose
             // 
-            AutoScaleDimensions = new SizeF(17F, 41F);
+            btnClose.Anchor = AnchorStyles.None;
+            btnClose.BackColor = SystemColors.Highlight;
+            btnClose.FlatStyle = FlatStyle.Flat;
+            btnClose.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnClose.Location = new Point(295, 0);
+            btnClose.Margin = new Padding(0);
+            btnClose.Name = "btnClose";
+            btnClose.Size = new Size(25, 25);
+            btnClose.TabIndex = 1;
+            btnClose.Text = "X";
+            btnClose.UseVisualStyleBackColor = false;
+            btnClose.Click += btnClose_Click;
+            // 
+            // pnlDrag
+            // 
+            pnlDrag.Cursor = Cursors.Hand;
+            pnlDrag.Location = new Point(0, 0);
+            pnlDrag.Margin = new Padding(0);
+            pnlDrag.Name = "pnlDrag";
+            pnlDrag.Size = new Size(295, 25);
+            pnlDrag.TabIndex = 2;
+            // 
+            // MainWindow
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            BackColor = SystemColors.WindowFrame;
+            ClientSize = new Size(320, 180);
+            Controls.Add(pnlDrag);
+            Controls.Add(btnClose);
             Controls.Add(btnGrab);
-            Name = "Form1";
+            FormBorderStyle = FormBorderStyle.None;
+            Margin = new Padding(1);
+            Name = "MainWindow";
             Text = "Form1";
             ResumeLayout(false);
         }
@@ -55,5 +87,7 @@
         #endregion
 
         private Button btnGrab;
+        private Button btnClose;
+        private Panel pnlDrag;
     }
 }

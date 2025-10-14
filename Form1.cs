@@ -26,7 +26,6 @@ namespace ScreenGrabber
             int pnlDragHeight = 50;
             int pnlDragWidth = winWidth - 50;
 
-
             this.Opacity = .75;
 
             this.Size = new Size(winWidth, winHeight);
@@ -44,17 +43,15 @@ namespace ScreenGrabber
             pnlDrag.Size = new Size(pnlDragWidth, pnlDragHeight);
 
             pnlDrag.BackColor = Color.Transparent;
-            //pnlDrag.Cursor = Cursors.Hand;
 
             pnlDrag.MouseDown += pnlDrag_MouseDown;
             pnlDrag.MouseMove += pnlDrag_Move;
             pnlDrag.MouseUp += pnlDrag_MouseUp;
 
-
             //Testing Debug
             Debug.Print("Ready to grab");
 
-            Debug.Print(btnClose.Height.ToString() + " " + btnClose.Width.ToString());
+            //Debug.Print(btnClose.Height.ToString() + " " + btnClose.Width.ToString());
         }
 
         private void pnlDrag_MouseDown(object sender, MouseEventArgs e)
@@ -65,10 +62,10 @@ namespace ScreenGrabber
                 lastCursorPos = new Point(e.X, e.Y);
             }
         }
-
         private void pnlDrag_Move(object sender, MouseEventArgs e)
         {
-            if (pnlDragIsDragging) {
+            if (pnlDragIsDragging)
+            {
                 this.Left += e.X - lastCursorPos.X;
                 this.Top += e.Y - lastCursorPos.Y;
             }
@@ -76,9 +73,7 @@ namespace ScreenGrabber
 
         private void pnlDrag_MouseUp(object sender, MouseEventArgs e)
         {
-            
             pnlDragIsDragging = false;
-            
         }
 
         private async void btnGrab_Click(object sender, EventArgs e)
@@ -96,13 +91,7 @@ namespace ScreenGrabber
              * in the window*/
 
             //Code that runs on Grab Button click
-            Rectangle rockt = Screen.PrimaryScreen.Bounds;
-
-            Bitmap bm = new Bitmap(rockt.Width, rockt.Height);
-
-            Graphics g = Graphics.FromImage(bm);
-
-            g.CopyFromScreen(0, 0, 0, 0, rockt.Size);
+            Bitmap bm = GetBitmapScreenShot();
 
             //Remove if not working
             Bitmap winBm = new Bitmap(this.Size.Width, this.Size.Height);
@@ -115,6 +104,16 @@ namespace ScreenGrabber
 
             this.BackgroundImage = winBm;
 
+            this.Opacity = 1;
+
+            int btnRowX = (this.Width / 2 - (btnGrab.Width + 15 + btnSave.Width));
+
+            int btnRowY = this.Height - btnGrab.Height - 15;
+
+            btnGrab.Location = new Point(btnRowX, btnRowY);
+            btnSave.Location = new Point((btnRowX + btnGrab.Width + 15), btnRowY);
+            btnSave.Show(); 
+
             this.Show();
 
             Debug.Print("Capture is completed!");
@@ -123,6 +122,37 @@ namespace ScreenGrabber
         private void btnClose_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void SaveFileDialog1_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+
+        }
+
+        private Bitmap GetBitmapScreenShot()
+        {
+            Rectangle screenRectangle = Screen.PrimaryScreen.Bounds;
+
+            Bitmap bm = new Bitmap(screenRectangle.Width, screenRectangle.Height);
+
+            Graphics g = Graphics.FromImage(bm);
+
+            g.CopyFromScreen(0, 0, 0, 0, screenRectangle.Size);
+
+            return bm;
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            dialogSave.Filter = "Bitmap| *.bmp";
+            DialogResult result = dialogSave.ShowDialog();
+
+            if (result == DialogResult.OK) {
+                string filePath = dialogSave.FileName;
+                GetBitmapScreenShot().Save(filePath);
+            }
+            
+
         }
     }
 }

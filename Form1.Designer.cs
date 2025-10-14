@@ -31,12 +31,14 @@
             btnGrab = new Button();
             btnClose = new Button();
             pnlDrag = new Panel();
+            dialogSave = new SaveFileDialog();
+            btnSave = new Button();
             SuspendLayout();
             // 
             // btnGrab
             // 
             btnGrab.Location = new Point(135, 140);
-            btnGrab.Margin = new Padding(1);
+            btnGrab.Margin = new Padding(0);
             btnGrab.Name = "btnGrab";
             btnGrab.Size = new Size(50, 25);
             btnGrab.TabIndex = 0;
@@ -68,12 +70,29 @@
             pnlDrag.Size = new Size(295, 25);
             pnlDrag.TabIndex = 2;
             // 
+            // dialogSave
+            // 
+            dialogSave.FileOk += SaveFileDialog1_FileOk;
+            // 
+            // btnSave
+            // 
+            btnSave.Location = new Point(135, 140);
+            btnSave.Margin = new Padding(0);
+            btnSave.Name = "btnSave";
+            btnSave.Size = new Size(50, 25);
+            btnSave.TabIndex = 3;
+            btnSave.Text = "Save";
+            btnSave.UseVisualStyleBackColor = true;
+            btnSave.Visible = false;
+            btnSave.Click += btnSave_Click;
+            // 
             // MainWindow
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.WindowFrame;
             ClientSize = new Size(320, 180);
+            Controls.Add(btnSave);
             Controls.Add(pnlDrag);
             Controls.Add(btnClose);
             Controls.Add(btnGrab);
@@ -89,5 +108,7 @@
         private Button btnGrab;
         private Button btnClose;
         private Panel pnlDrag;
+        private SaveFileDialog dialogSave;
+        private Button btnSave;
     }
 }
